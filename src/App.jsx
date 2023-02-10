@@ -69,11 +69,27 @@ useEffect(() => {
   }, []
 )
 
+// ugly, but working:
+function holdOption(id) {
+  setQuestions(prevQuestions => prevQuestions.map(question => {
+    if (question.answers.filter(answer => id === answer.id).length === 0
+    ) {
+      return {...question}
+    } else {
+      return {...question, answers: question.answers.map(answer => {
+        return answer.id === id ? {...answer, isHold: true} : {...answer, isHold: false}
+        })
+      }
+    }
+  }))
+}
+
 const questionElements = questions.map((question) => (
   <Question
     key={question.id}
     questionText={question.questionText}
     answers={question.answers}
+    holdOption={holdOption}
   />
 ))
 

@@ -2,10 +2,12 @@ import React from "react"
 import Answer from "./Answer.jsx"
 
 function Question(props) {
-
+    // console.log(props)
     const answerElements = props.answers.map(answer => (
         <Answer
+            key={answer.id}
             answerObj={answer}
+            holdOption={props.holdOption}
         />
     ))
 
