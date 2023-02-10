@@ -1,9 +1,9 @@
 import React from "react"
 
-function Answer() {
+function Answer(props) {
 
     return (
-        <p>answer</p>
+        <p className="option">{props.answerObj.answerText}</p>
     )
 }
 

@@ -9,6 +9,7 @@ html {
 html,
 body,
 h1,
+h3,
 p {
   margin: 0;
   padding: 0;
@@ -17,30 +18,25 @@ p {
 body {
   font-family: inter, sans-serif;
   font-weight: 400;
-  color: #293264
-}
-
-h1.title {
-  font-family: Karla;
-  font-weight: 700;
+  color: #293264;
+  position: relative;
 }
 
 .background {
-  position: relative;
+ 
   background-color: #F5F7FB;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid black;
 }
 
 .container {
   max-width: 550px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 2em;
 }
 
 .container::after {
@@ -67,6 +63,21 @@ h1.title {
   border-radius: 50%;
 }
 
+/* ==================
+  StartPage 
+  ==================*/
+
+h1.title {
+  font-family: Karla;
+  font-weight: 700;
+}
+
+
+.start-container {
+  justify-content: center;
+  gap: 2em;
+}
+
 .btn {
   padding: 1.25em 3em;
   background: #4D5B9E;
@@ -80,4 +91,50 @@ h1.title {
 
 .btn:hover {
   cursor: pointer;
+}
+
+
+/* ==================
+  QuestionPage 
+  ==================*/
+
+.question-section-container {
+justify-content: flex-start; /* doesn't work */
+gap: 1em;
+}
+
+.question-container {
+  width: 100%;
+  padding-bottom: 1em;
+border-bottom: 1px solid #DBDEF0;
+}
+
+.question {
+margin-bottom: 1em;
+font-family: Karla;
+font-weight: 700;
+}
+
+.answer-container {
+display: flex;
+justify-content: flex-start;
+gap: 5em;
+}
+
+.option {
+margin-bottom: 1em;
+padding: 0.5em 1.5em;
+font-weight: 500;
+font-size: 0.75rem;
+text-align: center;
+border: 0.794239px solid #4D5B9E;
+border-radius: 1em;
+}
+
+.option:hover {
+  cursor: pointer;
+}
+
+.check-answer-btn {
+margin-top: 1.5em;
 }
