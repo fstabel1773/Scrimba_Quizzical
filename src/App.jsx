@@ -6,7 +6,7 @@ import StartPage from "./Components/StartPage.jsx"
 
 function App() {
  const [questions, setQuestions] = useState([])
- const [score, setScore] = useState()
+ const [score, setScore] = useState(0)
  const [isChecked, setIsChecked] = useState(false)
 
 function getScore() {
@@ -15,15 +15,15 @@ function getScore() {
       answer.isHold
       && answer.isCorrect)
   }).length)
-  console.log(score)
 }
 
 useEffect(() => {
-  getScore(), [score]
+  if (questions.length > 0) {
+    getScore(), [score]
+  }
 })
 
 function checkAnswers() {
-  console.log("check")
   setIsChecked(true)
 }
 
@@ -33,7 +33,6 @@ function checkAnswers() {
 
 async function getQuestions() {
   try {
-
     // fetch data
     const response = await fetch(`https://opentdb.com/api.php?amount=5`)
     const data = await response.json()
