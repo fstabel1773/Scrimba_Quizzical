@@ -35,6 +35,9 @@ async function getQuestions() {
   try {
     // fetch data
     const response = await fetch(`https://opentdb.com/api.php?amount=5`)
+    if (!response.ok) {
+      throw new Error('Network response was not OK');
+    }
     const data = await response.json()
     
     const customQuestionsArray = data.results.map(question => {

@@ -1,5 +1,7 @@
 import React from "react"
 import Answer from "./Answer.jsx"
+import he from "he"
+
 
 function Question(props) {
     // console.log(props)
@@ -14,7 +16,7 @@ function Question(props) {
 
     return (
         <div className="question-container">
-            <h3 className="question">{props.questionText}</h3>
+            <h3 className="question">{he.decode(props.questionText)}</h3>
             <div className="answer-container">
                 {answerElements}
             </div>

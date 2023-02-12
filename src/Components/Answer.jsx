@@ -1,4 +1,5 @@
 import React from "react"
+import he from "he"
 
 function Answer(props) {
     let styles = {};
@@ -39,7 +40,7 @@ function Answer(props) {
         <p className="option"
         onClick={() => props.holdOption(props.answerObj.id)}
         style={styles}
-        >{props.answerObj.answerText}</p>
+        >{he.decode(props.answerObj.answerText)}</p>
     )
 }
 
