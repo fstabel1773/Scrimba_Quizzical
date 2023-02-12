@@ -8,6 +8,7 @@ function App() {
  const [questions, setQuestions] = useState([])
  const [score, setScore] = useState(0)
  const [isChecked, setIsChecked] = useState(false)
+ const [sessionToken, setSessionToken] = useState(getSessionToken())
 
 function getScore() {
   setScore(questions.filter(question => {
@@ -29,15 +30,33 @@ function checkAnswers() {
 
  
  // Using session tokens for tracking which questions already retrieved
+async function getSessionToken() {
+  try {
+    const response = await fetch(`https://opentdb.com/api_token.php?command=request`)
+    if(!response.ok){
+      throw new Error("Fetching token failed.");
+  }
+    const token = await response.json()
+    setSessionToken(token.token)
+} catch(error) {
+  console.error(error)
+}
+}
+
+useEffect(() => {
+  console.log(sessionToken)
+  setSessionToken()
+  }, []
+)
 
 
 async function getQuestions() {
   try {
     // fetch data
-    const response = await fetch(`https://opentdb.com/api.php?amount=5`)
-    if (!response.ok) {
-      throw new Error('Network response was not OK');
-    }
+    const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${sessionToken}`)
+    if(!response.ok){
+      throw new Error("Fetching data failed.");
+  }
     const data = await response.json()
     
     const customQuestionsArray = data.results.map(question => {
@@ -129,15 +148,9 @@ const footerChecked = <div className="footerChecked"><h3>You scored {score}/5 an
       : <StartPage newGame={newGame} />}
     </div>
   )
-}
-
-function generateCustomAnswerObject() {
 
 }
 
-function generateCustomQuestionObject() {
-
-}
 
 
 export default App
