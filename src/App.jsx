@@ -1,22 +1,35 @@
 import { useEffect, useState } from 'react'
 import React from "react"
-import {nanoid} from "nanoid"
+import { nanoid } from "nanoid"
 import Question from "./Components/Question.jsx"
 import StartPage from "./Components/StartPage.jsx"
 
 function App() {
  const [questions, setQuestions] = useState([])
+ const [score, setScore] = useState()
+ const [isChecked, setIsChecked] = useState(false)
+
+function getScore() {
+  setScore(questions.filter(question => {
+    return question.answers.some(answer => 
+      answer.isHold
+      && answer.isCorrect)
+  }).length)
+  console.log(score)
+}
+
+useEffect(() => {
+  getScore(), [score]
+})
+
+function checkAnswers() {
+  console.log("check")
+  setIsChecked(true)
+}
 
  
  // Using session tokens for tracking which questions already retrieved
 
-  function generateCustomAnswerObject() {
-
-  }
-
-  function generateCustomQuestionObject() {
-
-  }
 
 async function getQuestions() {
   try {
@@ -33,7 +46,7 @@ async function getQuestions() {
       let allAnswersArray = question.incorrect_answers
       allAnswersArray.push(question.correct_answer)
 
-      // creater answer-objects
+      // create answer-objects
       allAnswersArray = allAnswersArray.map(answer => {
         return {
           id: nanoid(),
@@ -64,10 +77,10 @@ async function getQuestions() {
   }
 }
 
-useEffect(() => {
-  getQuestions()
-  }, []
-)
+// useEffect(() => {
+//   getQuestions()
+//   }, []
+// )
 
 // ugly, but working:
 function holdOption(id) {
@@ -84,23 +97,45 @@ function holdOption(id) {
   }))
 }
 
+function newGame() {
+  setIsChecked(false);
+  getQuestions();
+}
+
 const questionElements = questions.map((question) => (
   <Question
     key={question.id}
     questionText={question.questionText}
     answers={question.answers}
     holdOption={holdOption}
+    isChecked={isChecked}
   />
 ))
 
+const footer = <button className="btn check-answer-btn" onClick={checkAnswers}>Check answer</button>;
+
+const footerChecked = <div className="footerChecked"><h3>You scored {score}/5 answers.</h3>
+<button className="btn" onClick={newGame}>Play again</button></div>;
+
   return (
     <div className="background">
-      <div className="container question-section-container">
-        {questionElements}
-        <button className="btn check-answer-btn">Check answer</button>
-      </div>
+      {questions.length > 0
+      ? <div className="container question-section-container">
+            {questionElements}
+            {isChecked ? footerChecked : footer}        
+          </div>
+      : <StartPage newGame={newGame} />}
     </div>
   )
 }
+
+function generateCustomAnswerObject() {
+
+}
+
+function generateCustomQuestionObject() {
+
+}
+
 
 export default App

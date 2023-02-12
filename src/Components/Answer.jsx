@@ -1,13 +1,31 @@
 import React from "react"
 
 function Answer(props) {
-
-    const styles = props.answerObj.isHold 
-    ? {
-        backgroundColor: "#D6DBF5",
-        border: "none",
+    console.log(props)
+    let styles = {};
+    if (!props.isChecked && props.answerObj.isHold) {
+        styles = {
+            backgroundColor: "#D6DBF5",
+            border: "none",
         } 
-    : {}
+    } if (props.isChecked) {
+        if (props.answerObj.isHold && props.answerObj.isCorrect) {
+            styles = {
+                backgroundColor: "#94D7A2",
+                border: "none",
+            }
+        } else if (props.answerObj.isHold && !props.answerObj.isCorrect) {
+            styles = {
+                opacity: 0.5,
+                backgroundColor: "#F8BCBC",
+                border: "none",
+            }
+        } else {
+            styles = {
+                opacity: 0.5,
+            }
+        }
+    }
 
     return (
         <p className="option"

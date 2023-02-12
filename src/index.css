@@ -138,3 +138,11 @@ border-radius: 1em;
 .check-answer-btn {
 margin-top: 1.5em;
 }
+
+.footerChecked {
+  display: flex;
+  justify-content:right;
+  align-items: center;
+  gap: 2em;
+  margin-top: 1.5em;
+}

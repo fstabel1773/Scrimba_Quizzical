@@ -8,6 +8,7 @@ function Question(props) {
             key={answer.id}
             answerObj={answer}
             holdOption={props.holdOption}
+            isChecked={props.isChecked}
         />
     ))
 
