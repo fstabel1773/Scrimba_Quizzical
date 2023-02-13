@@ -4,7 +4,6 @@ import he from "he"
 
 
 function Question(props) {
-    // console.log(props)
     const answerElements = props.answers.map(answer => (
         <Answer
             key={answer.id}
@@ -22,6 +21,7 @@ function Question(props) {
             </div>
         </div>
     )
+
 }
 
 export default Question

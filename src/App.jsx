@@ -9,14 +9,17 @@ function App() {
  const [score, setScore] = useState(0)
  const [isChecked, setIsChecked] = useState(false)
  const [sessionToken, setSessionToken] = useState("")
+ const [isLoading, setIsLoading] = useState(false)
 
 
 async function getQuestions() {
+  setIsLoading(true)
   try {
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${sessionToken}`)
     if(!response.ok){
       throw new Error("Fetching data failed.");
-  }
+    }
+    setIsLoading(false)
     const data = await response.json()
     
     const customQuestionsArray = data.results.map(question => {
@@ -132,14 +135,16 @@ const footer = <button className="btn check-answer-btn" onClick={checkAnswers}>C
 const footerChecked = <div className="footerChecked"><h3>You scored {score}/5 answers.</h3>
 <button className="btn" onClick={newGame}>Play again</button></div>;
 
+const loading = <h1>Loading...</h1>
+
   return (
     <div className="background">
-      {questions.length > 0
+      {isLoading ? loading : questions.length > 0
       ? <div className="container question-section-container">
-            {questionElements}
-            {isChecked ? footerChecked : footer}        
-          </div>
-      : <StartPage newGame={newGame} />}
+          {questionElements}
+          {isChecked && !isLoading ? footerChecked : footer}        
+        </div>
+      : <StartPage loading={isLoading} newGame={newGame} />}
     </div>
   )
 
