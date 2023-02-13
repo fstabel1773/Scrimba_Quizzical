@@ -8,51 +8,11 @@ function App() {
  const [questions, setQuestions] = useState([])
  const [score, setScore] = useState(0)
  const [isChecked, setIsChecked] = useState(false)
- const [sessionToken, setSessionToken] = useState(getSessionToken())
-
-function getScore() {
-  setScore(questions.filter(question => {
-    return question.answers.some(answer => 
-      answer.isHold
-      && answer.isCorrect)
-  }).length)
-}
-
-useEffect(() => {
-  if (questions.length > 0) {
-    getScore(), [score]
-  }
-})
-
-function checkAnswers() {
-  setIsChecked(true)
-}
-
- 
- // Using session tokens for tracking which questions already retrieved
-async function getSessionToken() {
-  try {
-    const response = await fetch(`https://opentdb.com/api_token.php?command=request`)
-    if(!response.ok){
-      throw new Error("Fetching token failed.");
-  }
-    const token = await response.json()
-    setSessionToken(token.token)
-} catch(error) {
-  console.error(error)
-}
-}
-
-useEffect(() => {
-  console.log(sessionToken)
-  setSessionToken()
-  }, []
-)
+ const [sessionToken, setSessionToken] = useState("")
 
 
 async function getQuestions() {
   try {
-    // fetch data
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${sessionToken}`)
     if(!response.ok){
       throw new Error("Fetching data failed.");
@@ -98,12 +58,6 @@ async function getQuestions() {
   }
 }
 
-// useEffect(() => {
-//   getQuestions()
-//   }, []
-// )
-
-// ugly, but working:
 function holdOption(id) {
   setQuestions(prevQuestions => prevQuestions.map(question => {
     if (question.answers.filter(answer => id === answer.id).length === 0
@@ -118,10 +72,50 @@ function holdOption(id) {
   }))
 }
 
+function getScore() {
+  setScore(questions.filter(question => {
+    return question.answers.some(answer => 
+      answer.isHold
+      && answer.isCorrect)
+  }).length)
+}
+
+useEffect(() => {
+  if (questions.length > 0) {
+    getScore(), [score]
+  }
+})
+
+function checkAnswers() {
+  setIsChecked(true)
+}
+
 function newGame() {
+  if (!sessionToken) {
+    getSessionToken()
+  }
   setIsChecked(false);
   getQuestions();
 }
+ 
+ // Using session tokens for tracking which questions already retrieved
+async function getSessionToken() {
+  try {
+    const response = await fetch(`https://opentdb.com/api_token.php?command=request`)
+    if(!response.ok){
+      throw new Error("Fetching token failed.");
+  }
+    const token = await response.json()
+    setSessionToken(token.token)
+} catch(error) {
+  console.error(error)
+}
+}
+
+// useEffect(() => {
+//   setSessionToken()
+//   }, []
+// )
 
 const questionElements = questions.map((question) => (
   <Question
@@ -150,7 +144,5 @@ const footerChecked = <div className="footerChecked"><h3>You scored {score}/5 an
   )
 
 }
-
-
 
 export default App

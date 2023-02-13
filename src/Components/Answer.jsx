@@ -2,6 +2,7 @@ import React from "react"
 import he from "he"
 
 function Answer(props) {
+    console.log(props.answerObj.id + " updated")
     let styles = {};
     if (!props.isChecked && props.answerObj.isHold) {
         styles = {
