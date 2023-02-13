@@ -1,10 +1,10 @@
 * {
   box-sizing: border-box
 }
-
+/* 
 html {
   overflow: hidden;
-}
+} */
 
 html,
 body,
@@ -19,48 +19,24 @@ body {
   font-family: inter, sans-serif;
   font-weight: 400;
   color: #293264;
-  position: relative;
 }
 
 .background {
- 
-  background-color: #F5F7FB;
+  background: linear-gradient(225deg, #FFFAD1 0%, #FFFAD1 10%, #F5F7FB 10%, #F5F7FB 90%, #DEEBF8 90%, #DEEBF8 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
 }
 
 .container {
+  margin-top: 16%;
+  margin-bottom: 16%;
+  padding: 2em;
   max-width: 550px;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.container::after {
-  position: absolute;
-  top: -5em;
-  right: -6em;
-  content: "";
-  width: 18.75em;
-  height: 15em;
-  background: #FFFAD1;
-  transform: rotate(-128.49deg);
-  border-radius: 8em;
-}
-
-.container::before {
-  position: absolute;
-  bottom: -4em;
-  left: -10em;
-  content: "";
-  width: 18.75em;
-  height: 15em;
-  background: #DEEBF8;
-  transform: rotate(-128.49deg);
-  border-radius: 50%;
 }
 
 /* ==================
@@ -79,7 +55,7 @@ h1.title {
 }
 
 .btn {
-  padding: 1.25em 3em;
+  padding: 1em 3em;
   background: #4D5B9E;
   color: #F5F7FB;
   font-size: 1rem;
@@ -98,15 +74,15 @@ h1.title {
   QuestionPage 
   ==================*/
 
-.question-section-container {
-justify-content: flex-start; /* doesn't work */
+/* .question-section-container {
+justify-content: flex-start;
 gap: 1em;
-}
+} */
 
 .question-container {
   width: 100%;
-  padding-bottom: 1em;
-border-bottom: 1px solid #DBDEF0;
+  padding: 1em 0;
+  border-bottom: 1px solid #DBDEF0;
 }
 
 .question {
@@ -116,18 +92,21 @@ font-weight: 700;
 }
 
 .answer-container {
+margin-bottom: 1em;
 display: flex;
-justify-content: flex-start;
-gap: 5em;
+flex-direction: column;
+justify-content: space-between;
+flex-wrap: wrap;
+gap: 1em;
 }
 
 .option {
-margin-bottom: 1em;
 padding: 0.5em 1.5em;
+white-space: nowrap;
 font-weight: 500;
 font-size: 0.75rem;
 text-align: center;
-border: 0.794239px solid #4D5B9E;
+border: 1px solid #4D5B9E;
 border-radius: 1em;
 }
 
@@ -145,4 +124,11 @@ margin-top: 1.5em;
   align-items: center;
   gap: 2em;
   margin-top: 1.5em;
+}
+
+@media (min-width: 768px) {
+  .container {
+      margin-top: 5%;
+      margin-bottom: 5%;
+}
 }
